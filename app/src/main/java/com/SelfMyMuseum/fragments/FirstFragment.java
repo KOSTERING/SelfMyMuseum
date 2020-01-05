@@ -17,18 +17,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SelfMyMuseum.BannerView;
 import com.SelfMyMuseum.R;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.FindCallback;
+import com.SelfMyMuseum.adapter.ExhibitListAdapter;
+import com.SelfMyMuseum.classes.Exhibitshort;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import leancloud.zry.mymuseum.BannerView;
-import leancloud.zry.mymuseum.R;
-import leancloud.zry.mymuseum.adapter.ExhibitListAdapter;
+/*import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;*/
+
+//import leancloud.zry.mymuseum.BannerView;
+
 
 
 /**
@@ -41,7 +44,7 @@ public class FirstFragment extends android.app.Fragment {
     private TextView textView;
 
     // 展览的信息
-    private List<AVObject> exhibits;
+    private List<Exhibitshort> exhibits;
 
     private Context context;
 
@@ -94,7 +97,7 @@ public class FirstFragment extends android.app.Fragment {
 
     private void initData(final View view) {
         exhibits.clear();
-        AVQuery<AVObject> avQuery = new AVQuery<>("Exhibit");
+        /*AVQuery<AVObject> avQuery = new AVQuery<>("Exhibit");
         avQuery.orderByDescending("createdAt");
         avQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
@@ -108,12 +111,22 @@ public class FirstFragment extends android.app.Fragment {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
+        for(int i=0;i<2;i++){
+            Exhibitshort draw=new Exhibitshort("菊香晚艳",R.mipmap.ehibit4,"菊花题材文物联展","2017-6-1","2017-6-10");
+            exhibits.add(draw);
+            Exhibitshort butterfly=new Exhibitshort("四僧书画展",R.mipmap.siseng,"清末四僧书画展，走过路过不要错过啦","2017-5-1","2017-6-10");
+            exhibits.add(butterfly);
+            Exhibitshort hui=new Exhibitshort("徽匠神韵",R.mipmap.hui,"安徽徽州传统工艺展","2017-5-1","2017-6-10");
+            exhibits.add(hui);
+        }
+        showRecyclerView(view,exhibits);
+        BannerView bannerView = new BannerView(context,view,exhibits);
 
     }
 
-    private void showRecyclerView(final View view, List<AVObject> list) {
+    private void showRecyclerView(final View view, List<Exhibitshort> list) {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(context, 2);
@@ -158,10 +171,10 @@ public class FirstFragment extends android.app.Fragment {
     }
 
 
-    private void showData(List<AVObject> list) {
+    private void showData(List<Exhibitshort> list) {
         for (int i = 0; i < list.size(); i++ ){
    //         Log.d("exhibitcount", "qq");
-            String temp = (list.get(i)).get("title").toString();
+            String temp = (list.get(i)).getTitle().toString();
             Log.d("exhibits", temp);
         }
     }
@@ -169,9 +182,9 @@ public class FirstFragment extends android.app.Fragment {
     // 查询标题包含输入字段的展览
     private void search(String searchText, View view) {
         Toast.makeText(context, searchText, Toast.LENGTH_SHORT).show();
-        List<AVObject> searchResults = new ArrayList<>();
-        for (AVObject product : exhibits) {
-            String temp = product.get("title").toString();
+        List<Exhibitshort> searchResults = new ArrayList<>();
+        for (Exhibitshort product : exhibits) {
+            String temp = product.getTitle().toString();
 
             if (temp.contains(searchText)) {
                 searchResults.add(product);

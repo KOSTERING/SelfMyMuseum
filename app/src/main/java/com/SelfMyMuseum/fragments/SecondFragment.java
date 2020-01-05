@@ -16,17 +16,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.FindCallback;
+import com.SelfMyMuseum.R;
+import com.SelfMyMuseum.activitys.SearchResultActivity;
+import com.SelfMyMuseum.adapter.TypeListAdapter;
+import com.SelfMyMuseum.classes.Type;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import leancloud.zry.mymuseum.R;
-import leancloud.zry.mymuseum.activity.SearchResultActivity;
-import leancloud.zry.mymuseum.adapter.TypeListAdapter;
+;
 
 /**
  * Created by Reene on 2017/5/19.
@@ -35,7 +33,7 @@ import leancloud.zry.mymuseum.adapter.TypeListAdapter;
 public class SecondFragment extends android.app.Fragment{
 
     // 展览的信息
-    private List<AVObject> types;
+    private List<Type> types;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -70,7 +68,7 @@ public class SecondFragment extends android.app.Fragment{
 
     private void initData(final View view) {
         types.clear();
-        AVQuery<AVObject> avQuery = new AVQuery<>("ProductType");
+        /*AVQuery<AVObject> avQuery = new AVQuery<>("ProductType");
 
         avQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
@@ -83,12 +81,25 @@ public class SecondFragment extends android.app.Fragment{
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
+
+        Type fan=new Type("扇子",R.mipmap.s3);
+        types.add(fan);
+        Type writing=new Type("文房四宝",R.mipmap.t5);
+        types.add(writing);
+        Type draw=new Type("书画",R.mipmap.draw);
+        types.add(draw);
+        Type ciqi=new Type("瓷器",R.mipmap.ciqi);
+        types.add(ciqi);
+        Type qingtong=new Type("青铜器",R.mipmap.qingtong);
+        types.add(qingtong);
+
+        showRecyclerView(view,types);
 
 
     }
 
-    private void showRecyclerView(final View view, List<AVObject> list) {
+    private void showRecyclerView(final View view, List<Type> list) {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.type_recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(context, 3);
         recyclerView.setLayoutManager(layoutManager);
@@ -134,7 +145,7 @@ public class SecondFragment extends android.app.Fragment{
     // 查询标题包含输入字段的展览
     private void search(String searchText) {
         // 交给SearchResult类处理
-        String searchType = "product";
+        String searchType = "Product";
         String searchString = searchText;
 
         Intent intent = new Intent(context,SearchResultActivity.class);

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.SelfMyMuseum.fragments.FirstFragment;
 import com.SelfMyMuseum.fragments.SecondFragment;
-import com.SelfMyMuseum.fragments.ThirdFragment;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 topBarText.setText("个人资料");
                 my.setSelected(true);
                 if(f3==null){
-                    f3 = new ThirdFragment();
+                    f3 = new FirstFragment();
                     transaction.add(R.id.fragment_container,f3);
                 }else{
                     transaction.show(f3);
